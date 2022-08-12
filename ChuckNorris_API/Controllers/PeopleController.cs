@@ -12,20 +12,20 @@ namespace ChuckNorris_API.Controllers
     public class PeopleController : ControllerBase
     {
         #region Properties
-        IPeopleService _people;
-        #endregion
+        private IPeopleService _people { get;}
+    #endregion
 
-        #region Constructor
-        public PeopleController(IPeopleService people)
-        {
-            _people = people;
-        }
-        #endregion
-        // GET: api/<PeopleController>
-        [HttpGet]
-        public People? Get()
-        {
-            return _people.List();
-        }
+    #region Constructor
+    public PeopleController(IPeopleService people)
+    {
+        _people = people;
+    }
+    #endregion
+    // GET: api/<PeopleController>
+    [HttpGet]
+    public People? Get()
+    {
+        return _people.List("https://swapi.dev/api/people/");
+    }
     }
 }

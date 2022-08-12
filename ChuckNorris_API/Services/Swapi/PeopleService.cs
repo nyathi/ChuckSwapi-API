@@ -2,20 +2,30 @@
 using ChuckNorris_API.Models.Swapi;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
 
 namespace ChuckNorris_API.Services.Swapi
 {
     public class PeopleService : IPeopleService
     {
+
+        #region Properties
+        private IAPIContantDefination _PIContantDefination { get; }
+        #endregion
+
         #region Constructor
+        public PeopleService(IAPIContantDefination aPIContantDefination)
+        {
+            _PIContantDefination=aPIContantDefination;
+        }
         #endregion
 
         #region Swapi People Service 
-        public People? List()
+        public People? List(string url)
         {
             try
             {
-                return JsonConvert.DeserializeObject<People?>(APIContant);
+                return JsonConvert.DeserializeObject<People?>(_PIContantDefination.APIContantData(url));
             }
             catch (Exception ex)
             {
@@ -27,22 +37,7 @@ namespace ChuckNorris_API.Services.Swapi
         #endregion
 
         #region Private Actions
-        private string? APIContant
-        {
-            get
-            {
-                var client = new RestClient("https://swapi.dev/api/people/");
-                var request = new RestRequest();
-                var response = client.Execute(request);
-
-                if (!response.IsSuccessful)
-                {
-                    return null;
-                }
-
-                return response.Content;
-            }
-        }
+    
         #endregion
     }
 }

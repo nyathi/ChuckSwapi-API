@@ -26,7 +26,7 @@ namespace ChuckNorris_API.Controllers
         [HttpGet, Route("/chuck/categories")]
         public List<Categories>? Get()
         {
-            return _categoriesService.GetCategories(); ;
+            return _categoriesService.GetCategories("https://api.chucknorris.io/jokes/categories");
         }
     }
 }

@@ -9,16 +9,23 @@ namespace ChuckNorris_API.Services.chuck
     
     public class CategoriesService : ICategoriesService
     {
+        #region Properties
+        private IAPIContantDefination _PIContantDefination { get; }
+        #endregion
         #region Constructor
+        public CategoriesService(IAPIContantDefination aPIContantDefination)
+        {
+            _PIContantDefination=aPIContantDefination;
+        }
         #endregion
 
         #region Categories Service 
-        public List<Categories>? GetCategories()
+        public List<Categories>? GetCategories(string url)
         {
             List<Categories>? categories = new();
             try
             {
-                categories.AddRange(JsonConvert.DeserializeObject<List<string>?>(APIContant).Select(cat => new Categories { Name = cat }));
+                categories.AddRange(JsonConvert.DeserializeObject<List<string>?>(_PIContantDefination.APIContantData(url)).Select(cat => new Categories { Name = cat }));
 
             }
             catch (Exception ex)
@@ -31,22 +38,7 @@ namespace ChuckNorris_API.Services.chuck
         #endregion
 
         #region Private Actions
-        private string? APIContant
-        {
-            get
-            {
-                var client = new RestClient("https://api.chucknorris.io/jokes/categories");
-                var request = new RestRequest();
-                var response = client.Execute(request);
-
-                if (!response.IsSuccessful)
-                {
-                    return null;
-                }
-
-                return response.Content;
-            }
-        }
+       
         #endregion
     } 
 }

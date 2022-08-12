@@ -1,4 +1,6 @@
+using ChuckNorris_API.Services;
 using ChuckNorris_API.Services.chuck;
+using ChuckNorris_API.Services.Search;
 using ChuckNorris_API.Services.Swapi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddSwaggerGen();
 // registers the service
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<IPeopleService, PeopleService>();
+builder.Services.AddScoped<IJokesService, JokesService>();
+builder.Services.AddScoped<IAPIContantDefination, APIContantDefination>();
 
 var app = builder.Build();
 

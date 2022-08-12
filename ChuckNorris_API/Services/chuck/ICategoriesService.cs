@@ -4,6 +4,6 @@ namespace ChuckNorris_API.Services.chuck
 {
     public interface ICategoriesService
     {
-        List<Categories>? GetCategories();
+        List<Categories>? GetCategories(string url);
     }
 }
