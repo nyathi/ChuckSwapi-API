@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RestSharp" Version="108.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\chuck\" />
+    <Folder Include="Models\Search\" />
+    <Folder Include="Models\Swapi\Films\" />
+    <Folder Include="Models\Swapi\People\NewFolder\" />
+    <Folder Include="Models\Swapi\Species\" />
+    <Folder Include="Models\Swapi\Starships\" />
+    <Folder Include="Models\Swapi\Vehicles\" />
+    <Folder Include="Services\Search\" />
+  </ItemGroup>
+
+</Project>
