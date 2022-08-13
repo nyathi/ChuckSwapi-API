@@ -1,0 +1,66 @@
+﻿@page
+@model ChuckNorris_SPA.Pages.SearchModel
+@{
+}
+<div class="text-center" id="categoriesDiv">
+   
+    <input id="txtSearch" placeholder="Person" />
+   @* <input id="txtSearch" placeholder="Joke" /><br />*@
+    <input id="btnSearch" type="button" value="Search Jokes" onclick="searchJoke()" /><br />
+    <h1 class="display-4" id="category">Categories</h1><br />
+    <div id="jokeCategory"></div>
+    <p id="created_at"></p>
+    <p id="icon_url"></p>
+    <p id="id"></p>
+    <p id="updated_at"></p>
+    <p id="url"></p>
+    <p id="value"></p>
+   
+</div>
+
+
+<div class="text-center" id="categoriesDiv2">
+    <h1 class="display-4" id="origin">Categories</h1><br />
+    <div id="birth_Year"></div>
+    <p id="eye_Color"></p>
+    <p id="gender"></p>
+    <p id="hair_Color"></p>
+    <p id="height"></p>
+    <p id="homeworld"></p>
+    <p id="mass"></p>
+    <p id="skin_Color"></p>
+    <p id="films"></p>
+    <p id="species"></p>
+    <p id="starships"></p>
+    <p id="vehicles"></p>
+
+</div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
+<script src=~/js/Search.js></script>
+<script type="text/javascript">
+    function getCategory() {
+        var joke = "";
+        const tempKoje = new URLSearchParams(window.location.search)
+        for (const [key, value] of tempKoje) {
+            joke = value;
+        }
+        return joke;
+    }
+    
+    function searchJoke(){
+
+        Search.Functions.Search(getCategory());
+    }
+
+    Search.Functions.Initialise
+        (
+            'ApiKey',
+            'acount',
+            getCategory(),
+        );
+
+
+</script>
