@@ -2,6 +2,8 @@
 {
     public class People
     {
+        private string _origin = "Star Wars API";
+        public string Origin { get => _origin; set => _origin = value; }
         public int Count { get; set; }
         public string Next { get; set; }
         public string Previous { get; set; }

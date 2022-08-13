@@ -10,17 +10,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\chuck\" />
-    <Folder Include="Models\Search\" />
-    <Folder Include="Models\Swapi\Films\" />
-    <Folder Include="Models\Swapi\People\NewFolder\" />
-    <Folder Include="Models\Swapi\Species\" />
-    <Folder Include="Models\Swapi\Starships\" />
-    <Folder Include="Models\Swapi\Vehicles\" />
-    <Folder Include="Services\Search\" />
   </ItemGroup>
 
 </Project>

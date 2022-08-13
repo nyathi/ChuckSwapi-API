@@ -4,6 +4,6 @@ namespace ChuckNorris_API.Services.Swapi
 {
     public interface IPeopleService
     {
-        People? List();
+        People? List(string url);
     }
 }
