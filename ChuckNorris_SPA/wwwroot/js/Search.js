@@ -12,13 +12,22 @@
 					applicationKey: key,
 					account: email
 				};
+			},
+
+			SearchOption: function (key) {
+
+				let searchKey = key.split("#");
+				if (searchKey != null && searchKey[0] == "joke") {
+					Search.Functions.SearchJoke(searchKey[1]);
+				} else if (searchKey != null && searchKey[0] == "people") {
+					Search.Functions.SearchPeople(searchKey[1]);
+				}
 			}
 		},
 
-		Search: function (category) {
+		SearchPeople: function (category) {
 			var parameters = {
-				joke: category,
-				profile: $('#txtSearch').text()
+				input: category
 			};
 			$.ajax({
 				headers: {
@@ -27,7 +36,7 @@
 					"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
 					"Access-Control-Allow-Origin": "*"
 				},
-				url: 'http://localhost:8081/search',
+				url: 'http://localhost:8081/searchPeople',
 				data: parameters,
 				type: 'GET',
 				async: true,
@@ -36,40 +45,40 @@
 					//Loader
 				},
 				success: function (data) {
-					// get the Categories
+					//$("#categoriesDiv2").show();
+					//$("#categoriesDiv").hide();
+					if (data != null & data.results.length > 0) {
+						var person = data.results[0];
 
-					var joke = data.joke.result;
-					var person = data.profile.result;
+						$("#origin").html(data.origin);
 
-					$("#category").html(data.joke.origin);
-					
-					$.each(joke, function (key, x) {
+						$("#birth_Year").html(person.birth_Year);
+						$("#eye_Color").html(person.eye_Color);
 						
-						
-						$("#created_at").append(`${x.created_At}<br/>`);
-						$("#icon_url").append(`${x.icon_Url}<br/>`);
-						$("#updated_at").append(`${x.updated_at}<br/>`);
-						$("#id").append(`${x.id} <br/>`);
-						$("#value").append(`${x.value} <br/>`);
+						$("#gender").html(person.gender);
+						$("#hair_Color").html(person.hair_Color);
+						$("#height").html(person.height);
+						$("#homeworld").html(`<a href="${person.homeworld}">${person.homeworld}</a><br/>`);
+						$("#url").html(`<a href="${person.url}">${person.url}</a><br/>`);
+						$("#mass").html(person.mass);
+						$("#name").html(person.name);
 
-						$.each(x.categories, function (key, value) {
-							$("#jokeCategory").append(`${value}<br/>`);
+						$.each(person.films, function (key, value) {
+							$("#films").append(`<a href="${value}">${value}</a><br/>`);
 						});
-					});
 
-					$("#origin").html(data.profile.origin);
-	
-					$("#birth_Year").html(person.birth_Year);
-					$("#eye_Color").html(person.eye_Color);
-					$("#films").html(person.films);
-					$("#gender").html(person.gender);
-					$("#hair_Color").html(person.hair_Color);
-					$("#height").html(person.height);
-					$("#homeworld").html(person.homeworld);
-					$("#mass").html(person.mass);
-					$("#name").html(person.name);
+						$.each(person.species, function (key, value) {
+							$("#species").append(`<a href="${value}">${value}</a><br/>`);
+						});
 
-					
+						$.each(person.vehicles, function (key, value) {
+							$("#vehicles").append(`<a href="${value}">${value}</a><br/>`);
+						});
+
+						$.each(person.starships, function (key, value) {
+							$("#starships").append(`<a href="${value}">${value}</a><br/>`);
+						});
+                    }
 					
 				},
 				complete: function (data) {
@@ -83,8 +92,7 @@
 
 		SearchRandomJoke: function (category) {
 			var parameters = {
-				joke: category,
-				profile: $('#txtSearch').val()
+				input: category
 			};
 			$.ajax({
 				headers: {
@@ -93,13 +101,9 @@
 					"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
 					"Access-Control-Allow-Origin": "*"
 				},
-				url: 'http://localhost:8081/search',
-				/*data: { parameters },*/
-				data: JSON.stringify({
-					"profile": $('#txtSearch').val(),
-					"joke": category
-				}),
-				type: 'POST',
+				url: 'http://localhost:8081/searchJoke',
+				data: parameters,
+				type: 'GET',
 				async: true,
 				crossDomain: true,
 				beforeSend: function () {
@@ -107,37 +111,26 @@
 				},
 				success: function (data) {
 					// get the Categories
+					//$("#categoriesDiv2").hide();
+					//$("#categoriesDiv").show();
+					var joke = data.result;
 
-					var joke = data.joke.result;
-					var person = data.profile.results[0];
-
-					$("#category").html(data.joke.origin);
+					$("#category").html(data.origin);
 
 					$.each(joke, function (key, x) {
 
 
-						$("#created_at").append(`${x.created_At}<br/>`);
-						$("#icon_url").append(`${x.icon_Url}<br/>`);
-						$("#updated_at").append(`${x.updated_at}<br/>`);
-						$("#id").append(`${x.id} <br/>`);
-						$("#value").append(`${x.value} <br/>`);
+						/*$("#created_at").append(`${x.created_At}<br/>`);*/
+						/*$("#icon_url").append(`<img src="${x.icon_Url}" alt=""><br/>`);*/
+					/*	$("#url").append(`<a href="${x.url}"><a/><br/>`);*/
+						//$("#updated_at").append(`${x.updated_at}<br/>`);
+						//$("#id").append(`${x.id} <br/>`);
+						$("#value").append(`<a href="${x.url}">${x.value}<a/><br/>`);
 
 						$.each(x.categories, function (key, value) {
 							$("#jokeCategory").append(`${value}<br/>`);
 						});
 					});
-
-					$("#origin").html(data.profile.origin);
-
-					$("#birth_Year").html(person.birth_Year);
-					$("#eye_Color").html(person.eye_Color);
-					$("#films").html(person.films);
-					$("#gender").html(person.gender);
-					$("#hair_Color").html(person.hair_Color);
-					$("#height").html(person.height);
-					$("#homeworld").html(person.homeworld);
-					$("#mass").html(person.mass);
-					$("#name").html(person.name);
 				},
 				complete: function (data) {
 
@@ -147,14 +140,19 @@
 				}
 			});
 		}
+		
 	};
 
 	var functions = {
-		Initialise: function (applicationKey, email, category) {
+		Initialise: function (applicationKey, email, searchKey) {
 			api.functions.SetConfig(applicationKey, email);
-			api.Search(category);
+			api.functions.SearchOption(searchKey);
 		},
-		Search: function (category) {
+		SearchPeople: function (people) {
+			api.SearchPeople(people);
+        }
+		,
+		SearchJoke: function (category) {
 			api.SearchRandomJoke(category);
 		}
 	};

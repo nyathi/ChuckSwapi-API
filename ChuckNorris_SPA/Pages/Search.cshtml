@@ -4,23 +4,18 @@
 }
 <div class="text-center" id="categoriesDiv">
    
-    <input id="txtSearch" placeholder="Person" />
-   @* <input id="txtSearch" placeholder="Joke" /><br />*@
-    <input id="btnSearch" type="button" value="Search Jokes" onclick="searchJoke()" /><br />
-    <h1 class="display-4" id="category">Categories</h1><br />
     <div id="jokeCategory"></div>
-    <p id="created_at"></p>
-    <p id="icon_url"></p>
+    <p><span id="created_at"></span></p>
+    <p><span id="icon_url"></span></p>
     <p id="id"></p>
-    <p id="updated_at"></p>
+    <p><span id="updated_at"></span></p>
     <p id="url"></p>
-    <p id="value"></p>
+    <p>Joke: <span id="value"></span></p>
    
 </div>
 
 
 <div class="text-center" id="categoriesDiv2">
-    <h1 class="display-4" id="origin">Categories</h1><br />
     <div id="birth_Year"></div>
     <p id="eye_Color"></p>
     <p id="gender"></p>
@@ -29,10 +24,50 @@
     <p id="homeworld"></p>
     <p id="mass"></p>
     <p id="skin_Color"></p>
-    <p id="films"></p>
-    <p id="species"></p>
-    <p id="starships"></p>
-    <p id="vehicles"></p>
+  
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-md-2">
+                    <div class="text-center">
+                        <h5 class="display-4">Films</h5><br />
+                        <p id="films"></p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <div class="text-center">
+                        <h5 class="display-4">Species</h5><br />
+                        <p id="species"></p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <div class="text-center">
+                        <h5 class="display-4">Starships</h5><br />
+                        <p id="starships"></p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <div class="text-center">
+                        <h5 class="display-4">Vehicles</h5><br />
+                        <p id="vehicles"></p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <div class="text-center">
+                        <h5 class="display-4">url</h5><br />
+                        <p id="url"></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -42,17 +77,23 @@
 <script src=~/js/Search.js></script>
 <script type="text/javascript">
     function getCategory() {
-        var joke = "";
+        var searchKey = "";
         const tempKoje = new URLSearchParams(window.location.search)
         for (const [key, value] of tempKoje) {
-            joke = value;
+            searchKey = key +"#"+value;
         }
-        return joke;
+        return searchKey;
     }
     
     function searchJoke(){
 
-        Search.Functions.Search(getCategory());
+        let searchKey = getCategory().split("#");
+        if (searchKey != null && searchKey[0] == "joke"){
+            Search.Functions.SearchJoke(searchKey[1]);
+        } else if (searchKey != null && searchKey[0] == "people") {
+            Search.Functions.SearchPeople(searchKey[1]);
+        }
+
     }
 
     Search.Functions.Initialise

@@ -20,9 +20,9 @@ namespace ChuckNorris_API.Controllers
     {
         _people = people;
     }
-    #endregion
-    // GET: api/<PeopleController>
-    [HttpGet]
+        #endregion
+        // GET: api/<PeopleController>
+    [HttpGet, Route("/swapi/people")]
     public People? Get()
     {
         return _people.List("https://swapi.dev/api/people/");
