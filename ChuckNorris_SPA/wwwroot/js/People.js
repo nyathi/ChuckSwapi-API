@@ -1,4 +1,4 @@
-﻿var CategoryTree = (function ($) {
+﻿var ListOfPeople = (function ($) {
 
 	var api = {
 		config: {
@@ -15,7 +15,7 @@
 			}
 		},
 
-		CategoryTree: function () {
+		ListOfPeople: function () {
 			var parameters = {};
 			$.ajax({
 				headers: {
@@ -24,8 +24,7 @@
 					"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
 					"Access-Control-Allow-Origin": "*"
 				},
-				url: 'http://localhost:8081/chuck/categories',
-				/*url: 'https://api.chucknorris.io/jokes/categories',*/
+				url: 'http://localhost:8081/swapi/people',
 				data: parameters,
 				type: 'GET',
 				async: true,
@@ -34,16 +33,13 @@
 					//Loader
 				},
 				success: function (data) {
-					// get the Categories
 
-					if (data.length > 0) {
+					var person = data.results;
+					$.each(person, function (key, value) {
+						$("#peopleDiv").append(`<a href="/Search?people=${value.name}">${value.name}</a><br/>`);
+					});
 
-						var categories = data;
-						$.each(categories, function (key, value) {
-							$("#categoriesDiv").append(`<a href="/Search?joke=${value.name}">${value.name}</a><br/>`);
-						});
 
-					}
 				},
 				complete: function (data) {
 
@@ -58,7 +54,7 @@
 	var functions = {
 		Initialise: function (applicationKey, email) {
 			api.functions.SetConfig(applicationKey, email);
-			api.CategoryTree();
+			api.ListOfPeople();
 		}
 	};
 

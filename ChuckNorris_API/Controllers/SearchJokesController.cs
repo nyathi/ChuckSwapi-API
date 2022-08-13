@@ -66,6 +66,28 @@ namespace ChuckNorris_API.Controllers
            
         }
 
+        [HttpGet("/searchJoke")]
+        public async Task<IActionResult?> SearchJoke([System.Web.Http.FromUri] string input)
+        {
+            if (input == null) return NullInput();
+
+            var joke = _jokes.GetJoke($"https://api.chucknorris.io/jokes/search?query={input}");
+
+            return Ok(joke);
+
+        }
+
+        [HttpGet("/searchPeople")]
+        public async Task<IActionResult?> SearchPeople([System.Web.Http.FromUri] string input)
+        {
+            if (input == null) return NullInput();
+
+            var profile = _jokes.GetProfile($"https://swapi.dev/api/people/?search={input}");
+
+            return Ok(profile);
+
+        }
+
         #region Private Actions
         private dynamic NullInput()
         {
