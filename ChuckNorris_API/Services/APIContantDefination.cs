@@ -7,18 +7,13 @@ namespace ChuckNorris_API.Services
 
         public string? APIContantData(string url)
         {
-
-            var client = new RestClient(url);
-            var request = new RestRequest();
-            var response = client.Execute(request);
-
-            if (!response.IsSuccessful)
+            using (var client = new RestClient(url))
             {
-                return null;
-            }
+                var response = client.Execute(new RestRequest());
 
-            return response.Content;
-
+                return response.IsSuccessful ? response.Content : null;
+            };
+           
         }
     }
 }
